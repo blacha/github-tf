@@ -31,8 +31,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
-      - name: Diff CDKTF
-        run: |
-          npx cdktf diff
-        env:
-          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+      # - name: Diff CDKTF
+      #   run: |
+      #     npx cdktf diff
+      #   env:
+      #     BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
