@@ -23,3 +23,16 @@ npx cdktf diff
 
 npx cdktf apply
 ```
+
+
+### adding existing repositories
+
+To add a existing repository first create the cdktf for the repo, then run a `npx cdktf synth`,
+
+then using terraform perform a import inside the cdktf.out/stacks/:stackName folder
+
+```bash
+cd cdktf.out/stacks/github-tf/
+
+terraform import github_repository.$1 $1
+```
