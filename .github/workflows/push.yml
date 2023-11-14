@@ -9,18 +9,18 @@ jobs:
 
     steps:
       - uses: linz/action-typescript@v3
-  
+
   deploy-prod:
     name: 'Deploy'
     runs-on: ubuntu-latest
     needs: main
-    environment: 
+    environment:
       name: prod
 
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: linz/action-typescript@v3
-    
+
       - name: (Prod) Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -29,5 +29,5 @@ jobs:
       - name: Diff CDKTF
         run: |
           npx cdktf diff
-        env: 
+        env:
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
