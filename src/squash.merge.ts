@@ -1,4 +1,4 @@
-import { Repository, RepositoryConfig } from '@cdktf/provider-github/lib/repository';
+import { Repository, RepositoryConfig, RepositoryPages } from '@cdktf/provider-github/lib/repository';
 import { RepositoryEnvironment } from '@cdktf/provider-github/lib/repository-environment';
 import { Construct } from 'constructs';
 
@@ -23,6 +23,7 @@ const DefaultFeatures: Partial<RepositoryConfig> = {
 export interface SquashMergeFlowOptions {
   environments?: ('prod' | 'preprod' | 'nonprod')[];
   description?: string;
+  pages?: RepositoryPages;
 }
 
 export class SquashMergeFlow {
@@ -37,6 +38,7 @@ export class SquashMergeFlow {
       ...FlowSquashMerge,
       name: id,
       description: cfg?.description,
+      pages: cfg?.pages,
       visibility: 'public',
     });
 
