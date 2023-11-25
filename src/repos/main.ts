@@ -10,6 +10,12 @@ export function setupRepos(scope: Construct): void {
       prod: {
         secrets: {
           PAT: SsmUtil.secretFromArn('arn:aws:ssm:ap-southeast-2:938805226638:parameter/github/prod/github_pat'),
+          AWS_ROLE_ARN: SsmUtil.secretFromArn(
+            'arn:aws:ssm:ap-southeast-2:938805226638:parameter/github/prod/github-tf/aws_role_arn',
+          ),
+          BUCKET_NAME: SsmUtil.secretFromArn(
+            'arn:aws:ssm:ap-southeast-2:938805226638:parameter/github/prod/github-tf/bucket_name',
+          ),
         },
       },
     },
