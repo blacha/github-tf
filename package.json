@@ -1,14 +1,13 @@
 {
-  "name": "new",
+  "name": "@blacha/github-tf",
   "version": "1.0.0",
-  "main": "main.js",
-  "types": "main.ts",
-  "license": "MPL-2.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "get": "cdktf get",
     "build": "tsc",
     "synth": "cdktf synth",
+    "lint": "eslint src/ --fix",
     "test": "node --test"
   },
   "engines": {
@@ -17,13 +16,11 @@
   "dependencies": {
     "@aws-sdk/client-ssm": "^3.454.0",
     "@cdktf/provider-github": "^12.0.2",
-    "cdktf": "^0.19.1",
-    "cdktf-cli": "^0.19.1",
-    "constructs": "^10.3.0"
-  },
-  "devDependencies": {
     "@linzjs/style": "^5.1.0",
     "@types/node": "^20.9.0",
+    "cdktf-cli": "^0.19.1",
+    "cdktf": "^0.19.1",
+    "constructs": "^10.3.0",
     "tsx": "^4.1.1"
   }
 }
