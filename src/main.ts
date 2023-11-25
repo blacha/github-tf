@@ -1,9 +1,11 @@
+import { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret';
 import { DataGithubUser } from '@cdktf/provider-github/lib/data-github-user';
 import { GithubProvider } from '@cdktf/provider-github/lib/provider';
 import { App, S3Backend, TerraformOutput, TerraformStack } from 'cdktf';
 import { Construct } from 'constructs';
 
 import { setupRepos } from './repos/main';
+import { SsmUtil } from './ssm';
 
 function getOrThrow(key: string): string {
   const val = process.env[key];
@@ -31,6 +33,18 @@ class GithubConfig extends TerraformStack {
   }
 }
 
-const app = new App();
-new GithubConfig(app, 'github-tf');
-app.synth();
+/** Fetch SSM parameters and replace them in the configured secrets */
+async function replaceSecrets(gh: GithubConfig): Promise<void> {
+  const nodes = gh.node.findAll().filter((f) => f instanceof ActionsEnvironmentSecret) as ActionsEnvironmentSecret[];
+  const values = await SsmUtil.fetchAll();
+  for (const node of nodes) SsmUtil.replaceSecret(node, values);
+}
+
+async function main(): Promise<void> {
+  const app = new App();
+  const gh = new GithubConfig(app, 'github-tf');
+
+  await replaceSecrets(gh);
+  app.synth();
+}
+main();

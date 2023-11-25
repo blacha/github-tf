@@ -1,3 +1,4 @@
+import { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret';
 import { Repository, RepositoryConfig, RepositoryPages } from '@cdktf/provider-github/lib/repository';
 import { RepositoryEnvironment } from '@cdktf/provider-github/lib/repository-environment';
 import { Construct } from 'constructs';
@@ -21,14 +22,18 @@ const DefaultFeatures: Partial<RepositoryConfig> = {
 };
 
 export interface SquashMergeFlowOptions {
-  environments?: ('prod' | 'preprod' | 'nonprod')[];
   description?: string;
   pages?: RepositoryPages;
+  environments?: Partial<Record<GithubEnvNames, GithubEnvConfig>>;
 }
+
+export type GithubEnvNames = 'prod' | 'preprod' | 'nonprod';
+export type GithubEnvConfig = { secrets?: Record<string, string> };
 
 export class SquashMergeFlow {
   repository: Repository;
   id: string;
+  environments: Partial<Record<GithubEnvNames, RepositoryEnvironment>> = {};
 
   constructor(scope: Construct, id: string, cfg?: SquashMergeFlowOptions) {
     this.id = id;
@@ -42,11 +47,21 @@ export class SquashMergeFlow {
       visibility: 'public',
     });
 
-    cfg?.environments?.forEach((env) => {
-      new RepositoryEnvironment(scope, `${id}-env-${env}`, {
-        environment: env,
+    for (const [envName, config] of Object.entries(cfg?.environments ?? {})) {
+      const environment = new RepositoryEnvironment(scope, `${id}-${envName}`, {
+        environment: envName,
         repository: this.repository.name,
       });
-    });
+      this.environments[envName as GithubEnvNames] = environment;
+
+      for (const [key, value] of Object.entries(config.secrets ?? {})) {
+        new ActionsEnvironmentSecret(scope, `${id}-${envName}-${key.toLowerCase()}`, {
+          environment: envName,
+          repository: this.repository.name,
+          secretName: key,
+          plaintextValue: value,
+        });
+      }
+    }
   }
 }
