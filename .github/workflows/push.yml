@@ -30,6 +30,8 @@ jobs:
         with:
           node-version: '24.x'
 
+      - uses: hashicorp/setup-terraform@v3
+
       - name: (Prod) Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
