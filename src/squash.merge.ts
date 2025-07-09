@@ -1,7 +1,8 @@
-import { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret';
-import { Repository, RepositoryConfig, RepositoryPages } from '@cdktf/provider-github/lib/repository';
-import { RepositoryEnvironment } from '@cdktf/provider-github/lib/repository-environment';
-import { Construct } from 'constructs';
+import { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret/index.js';
+import type { RepositoryConfig, RepositoryPages } from '@cdktf/provider-github/lib/repository/index.js';
+import { Repository } from '@cdktf/provider-github/lib/repository/index.js';
+import { RepositoryEnvironment } from '@cdktf/provider-github/lib/repository-environment/index.js';
+import type { Construct } from 'constructs';
 
 const FlowSquashMerge: Partial<RepositoryConfig> = {
   allowMergeCommit: false,

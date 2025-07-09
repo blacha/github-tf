@@ -1,6 +1,7 @@
 {
   "extends": "@linzjs/style/tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "build"
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   }
 }

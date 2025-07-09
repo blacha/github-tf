@@ -1,11 +1,11 @@
-import { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret';
-import { DataGithubUser } from '@cdktf/provider-github/lib/data-github-user';
-import { GithubProvider } from '@cdktf/provider-github/lib/provider';
+import { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret/index.js';
+import { DataGithubUser } from '@cdktf/provider-github/lib/data-github-user/index.js';
+import { GithubProvider } from '@cdktf/provider-github/lib/provider/index.js';
 import { App, S3Backend, TerraformOutput, TerraformStack } from 'cdktf';
-import { Construct } from 'constructs';
+import type { Construct } from 'constructs';
 
-import { setupRepos } from './repos/main';
-import { SsmUtil } from './ssm';
+import { setupRepos } from './repos/main.ts';
+import { SsmUtil } from './ssm.ts';
 
 function getOrThrow(key: string): string {
   const val = process.env[key];

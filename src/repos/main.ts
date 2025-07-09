@@ -1,7 +1,7 @@
-import { Construct } from 'constructs';
+import type { Construct } from 'constructs';
 
-import { SquashMergeFlow } from '../squash.merge';
-import { SsmUtil } from '../ssm';
+import { SquashMergeFlow } from '../squash.merge.ts';
+import { SsmUtil } from '../ssm.ts';
 
 export function setupRepos(scope: Construct): void {
   new SquashMergeFlow(scope, 'github-tf', {

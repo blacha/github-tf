@@ -1,5 +1,5 @@
 import { SSM } from '@aws-sdk/client-ssm';
-import { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret';
+import type { ActionsEnvironmentSecret } from '@cdktf/provider-github/lib/actions-environment-secret/index.js';
 
 const ArnPrefix = 'arn:aws:ssm:ap-southeast-2:938805226638:parameter';
 
