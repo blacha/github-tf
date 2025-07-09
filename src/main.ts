@@ -47,4 +47,8 @@ async function main(): Promise<void> {
   await replaceSecrets(gh);
   app.synth();
 }
-main();
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
+
