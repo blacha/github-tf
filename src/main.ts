@@ -35,7 +35,7 @@ class GithubConfig extends TerraformStack {
 
 /** Fetch SSM parameters and replace them in the configured secrets */
 async function replaceSecrets(gh: GithubConfig): Promise<void> {
-  const nodes = gh.node.findAll().filter((f) => f instanceof ActionsEnvironmentSecret) as ActionsEnvironmentSecret[];
+  const nodes = gh.node.findAll().filter((f) => f instanceof ActionsEnvironmentSecret);
   const values = await SsmUtil.fetchAll();
   for (const node of nodes) SsmUtil.replaceSecret(node, values);
 }
@@ -51,4 +51,3 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
-
